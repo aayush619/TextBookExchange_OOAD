@@ -46,7 +46,15 @@
             
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-        <activity android:name=".ResultActivity" >
+        <activity
+            android:name=".ResultActivity"
+            android:label="Search Result"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ResultDetailActivity"
+            android:label="Book Detail"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

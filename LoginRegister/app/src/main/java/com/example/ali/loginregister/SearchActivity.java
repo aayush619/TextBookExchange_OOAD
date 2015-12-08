@@ -1,29 +1,22 @@
 package com.example.ali.loginregister;
 
-import android.app.SearchManager;
 import android.content.Intent;
-import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
-import android.view.MotionEvent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.List;
 
 public class SearchActivity extends AppCompatActivity implements OnClickListener, AdapterView.OnItemSelectedListener {
 
@@ -47,7 +40,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         TextView textView5 = (TextView) findViewById(R.id.textView5);
         TextView textView6 = (TextView) findViewById(R.id.textView6);
         b2 = (Button)findViewById(R.id.button2);
-        Button add = (Button) findViewById(R.id.button3);
+        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.button3);
         Button sear = (Button) findViewById(R.id.button2);
         autoCompleteTextView = (AutoCompleteTextView) findViewById(R.id.autoCompleteTextView);
         arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line);
@@ -68,7 +61,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        Button add = (Button) findViewById(R.id.button3);
+        FloatingActionButton add = (FloatingActionButton) findViewById(R.id.button3);
         add.setOnClickListener(this);
 
     }
@@ -84,7 +77,7 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         {
             search = autoCompleteTextView.getText().toString();
             Searchmanager sm = Searchmanager.getInstance();
-            Book[] book = new Book[10];
+            List<Book> book = new ArrayList<Book>();
             book = sm.searchResult(search);
 
 
@@ -92,8 +85,10 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
             if(book == null)
                 Toast.makeText(getApplicationContext(),"Book not found",Toast.LENGTH_SHORT).show();
         else {
+                Book[] bookArray = new Book[book.size()];
+                book.toArray(bookArray);
                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                intent.putExtra("book",book);
+                intent.putExtra("book",bookArray);
                 startActivity(intent);
             }
             }

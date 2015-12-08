@@ -1,19 +1,7 @@
 package com.example.ali.loginregister;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -29,10 +17,8 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * Created by zhangshuzhe on 11/23/15.
@@ -48,7 +34,7 @@ public class DatabaseManager {
     }
 
     //private Book[] book;
-    private Book[] book = new Book[10];
+    private List<Book> book = new ArrayList<Book>();
     boolean search_done = false;
     boolean userFound = false;
 
@@ -174,7 +160,7 @@ public class DatabaseManager {
 
 
 
-           public Book[] searchBook(String book_title)
+           public List<Book> searchBook(String book_title)
            {
             //This fn. is receiving the book's name that user entered.
                // U need to search the book in the database and return the book's title and the price.
@@ -233,7 +219,7 @@ public class DatabaseManager {
 
                        try {
                            JSONArray Jarray = new JSONArray(result);
-
+                           book.clear();
                            for(int i=0;i<Jarray.length();i++) {
                                JSONObject Jasonobject = null;
                                //text_1 = (TextView)findViewById(R.id.txt1);
@@ -249,7 +235,7 @@ public class DatabaseManager {
                                String Owner_Email = Jasonobject.getString("Owner_Email");
                                String Owner_Phone = Jasonobject.getString("Owner_Phone");
                                String db_detail = "";
-                               book[i] = new Book(Owner_name, Title, Author, Description, Price, Owner_Email, Owner_Phone);
+                               book.add(new Book(Owner_name, Title, Author, Description, Price, Owner_Email, Owner_Phone));
                                search_done = true;
                            }
 

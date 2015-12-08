@@ -1,6 +1,6 @@
 package com.example.ali.loginregister;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Aayush on 11/28/2015.
@@ -15,7 +15,7 @@ public class Searchmanager {
     private Searchmanager() {
     }
 
-    public Book[] searchResult(String book)
+    public List<Book> searchResult(String book)
     {
         DatabaseManager ds = DatabaseManager.getInstance();
         return ds.searchBook(book);
