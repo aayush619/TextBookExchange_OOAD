@@ -23,6 +23,14 @@
             android:layout_marginBottom="10dp"/>
 
         <TextView
+            android:id="@+id/detail_price"
+            android:text="Price"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"/>
+
+        <TextView
             android:id="@+id/detail_user"
             android:text="User"
             android:textSize="20dp"
@@ -34,6 +42,15 @@
             android:id="@+id/detail_description"
             android:text="Description"
             android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp" />
+
+        <TextView
+            android:id="@+id/reserve_status"
+            android:text=""
+            android:textSize="18dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="70dp" />

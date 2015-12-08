@@ -26,4 +26,8 @@ public class Searchmanager {
         DatabaseManager ds = DatabaseManager.getInstance();
         return ds.searchUser(userName, password);
     }
+    public void getUser(String UserName){
+        DatabaseManager ds = DatabaseManager.getInstance();
+        ds.getUser(UserName);
+    }
 }

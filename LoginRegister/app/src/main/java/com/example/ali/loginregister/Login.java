@@ -37,6 +37,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener{
                 Searchmanager sm = Searchmanager.getInstance();
                 if(sm.searchUser(etUserName.getText().toString(), etPassword.getText().toString())){
                     Intent intent = new Intent(this,SearchActivity.class);
+                    sm.getUser(etUserName.getText().toString());
                     startActivity(intent);
                 } else
                     Toast.makeText(getApplicationContext(), "User Not Found. Please enter valid user details", Toast.LENGTH_LONG).show();

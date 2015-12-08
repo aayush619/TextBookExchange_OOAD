@@ -39,6 +39,8 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         TextView textView4 = (TextView) findViewById(R.id.textView4);
         TextView textView5 = (TextView) findViewById(R.id.textView5);
         TextView textView6 = (TextView) findViewById(R.id.textView6);
+        if(! ThisUser.reservedBook1.equals("")) textView3.setText(ThisUser.reservedBook1);
+        if(! ThisUser.reservedBook2.equals("")) textView4.setText(ThisUser.reservedBook2);
         b2 = (Button)findViewById(R.id.button2);
         FloatingActionButton add = (FloatingActionButton) findViewById(R.id.button3);
         Button sear = (Button) findViewById(R.id.button2);
@@ -63,7 +65,10 @@ public class SearchActivity extends AppCompatActivity implements OnClickListener
         super.onResume();
         FloatingActionButton add = (FloatingActionButton) findViewById(R.id.button3);
         add.setOnClickListener(this);
-
+        TextView textView3 = (TextView) findViewById(R.id.textView3);
+        TextView textView4 = (TextView) findViewById(R.id.textView4);
+        if(! ThisUser.reservedBook1.equals("")) textView3.setText(ThisUser.reservedBook1);
+        if(! ThisUser.reservedBook2.equals("")) textView4.setText(ThisUser.reservedBook2);
     }
 
 

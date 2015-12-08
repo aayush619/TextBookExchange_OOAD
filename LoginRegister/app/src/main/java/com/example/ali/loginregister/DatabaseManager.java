@@ -37,6 +37,7 @@ public class DatabaseManager {
     private List<Book> book = new ArrayList<Book>();
     boolean search_done = false;
     boolean userFound = false;
+    public ThisUser thisUser;
 
     public boolean addBook(String Owner_name, String Title, String Author, String Description, String Price, String Owner_Email, String Owner_Phone) {
         String url_select = "http://john-shuzhe.byethost13.com/PostBook.php";
@@ -111,6 +112,9 @@ public class DatabaseManager {
         namePaires.add(new BasicNameValuePair("username", username));
         namePaires.add(new BasicNameValuePair("password", password));
         namePaires.add(new BasicNameValuePair("email", email));
+        namePaires.add(new BasicNameValuePair("ReservedBook1", ""));
+        namePaires.add(new BasicNameValuePair("ReservedBook2", ""));
+
 
 
         class addUser_task extends AsyncTask<String, String, Void>
@@ -369,6 +373,180 @@ public class DatabaseManager {
         }
         return userFound;
     }
+
+
+    public boolean getUser(final String userName)
+    {
+
+        String url_select = "http://john-shuzhe.byethost13.com/getUser.php";
+
+        final HttpClient httpClient = new DefaultHttpClient();
+        final HttpPost httpPost = new HttpPost(url_select);
+
+        final ArrayList<NameValuePair> namePaires = new ArrayList<NameValuePair>();
+        namePaires.add(new BasicNameValuePair("UserName", userName));
+
+        search_done = false;
+
+        class getUser_task extends AsyncTask<String, String, Void>
+        {
+            InputStream is = null ;
+            String result = "";
+            protected void onPreExecute() {
+
+            }
+            @Override
+            protected Void doInBackground(String... params) {
+
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(namePaires));
+
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+                    System.out.println(httpEntity);
+
+                    //read content
+                    is =  httpEntity.getContent();
+
+
+                } catch (Exception e) {
+
+                    Log.e("log_tag", "Error in http connection " + e.toString());
+                    //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+                }
+
+                try {
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
+                    StringBuilder sb = new StringBuilder();
+                    String line = "";
+                    while((line=br.readLine())!=null)
+                    {
+                        sb.append(line+"\n");
+                    }
+                    is.close();
+                    result=sb.toString();
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    Log.e("log_tag", "Error converting result "+e.toString());
+                }
+
+                try {
+
+                    JSONArray Jarray = new JSONArray(result);
+
+                    for(int i=0;i<Jarray.length();i++) {
+                        JSONObject Jasonobject = null;
+                        //text_1 = (TextView)findViewById(R.id.txt1);
+                        Jasonobject = Jarray.getJSONObject(i);
+
+                        //get an output on the screen
+                        //String id = Jasonobject.getString("id");
+                        String db_user_name = Jasonobject.getString("username");
+                        String db_name = Jasonobject.getString("name");
+                        String db_email = Jasonobject.getString("email");
+                        String db_reB1 = Jasonobject.getString("ReservedBook1");
+                        String db_reB2 = Jasonobject.getString("ReservedBook2");
+                        thisUser = new ThisUser(db_name,db_user_name,db_email,db_reB1,db_reB2);
+                        if(thisUser!=null){
+                            userFound = true;
+                        }
+                    }
+
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    Log.e("log_tag", "Error parsing data "+e.toString());
+                }
+                return null;
+
+            }
+            protected void onPostExecute(Void v) {
+                // ambil data dari Json database
+            }
+        }
+        try {
+            AsyncTask task = new getUser_task().execute();
+            //task.execute();
+            task.get();
+        }
+        catch(Exception e){
+
+        }
+        return userFound;
+    }
+
+
+
+
+
+
+
+    public boolean ReserveBook(Book chosenbook) {
+        String url_select = "http://john-shuzhe.byethost13.com/Reserve.php";
+        //final URL url = new URL("http://john-shuzhe.byethost13.com/demo.php");
+
+        final HttpClient httpClient = new DefaultHttpClient();
+        final HttpPost httpPost = new HttpPost(url_select);
+
+        final ArrayList<NameValuePair> namePaires = new ArrayList<NameValuePair>();
+        namePaires.add(new BasicNameValuePair("Title", chosenbook.getTitle()));
+        namePaires.add(new BasicNameValuePair("username", ThisUser.username));
+
+
+
+
+        class reserve_task extends AsyncTask<String, String, Void>
+        {
+            InputStream is = null ;
+            String result = "";
+            protected void onPreExecute() {
+
+            }
+            @Override
+            protected Void doInBackground(String... params) {
+
+                try {
+                    httpPost.setEntity(new UrlEncodedFormEntity(namePaires));
+
+                    HttpResponse httpResponse = httpClient.execute(httpPost);
+                    HttpEntity httpEntity = httpResponse.getEntity();
+
+                    //read content
+                    is =  httpEntity.getContent();
+
+
+                } catch (Exception e) {
+
+                    Log.e("log_tag", "Error in http connection " + e.toString());
+                    //Toast.makeText(MainActivity.this, "Please Try Again", Toast.LENGTH_LONG).show();
+                }
+
+
+                return null;
+
+            }
+            protected void onPostExecute(Void v) {
+
+                // ambil data dari Json database
+                getUser(ThisUser.username);
+
+            }
+        }
+        try {
+            AsyncTask task = new reserve_task().execute();
+            task.get();
+        }
+        catch(Exception e){}
+        return true;
+
+    }
+
+
+
+
+
+
+
 
 public void deleteEntry(String book1)
 {

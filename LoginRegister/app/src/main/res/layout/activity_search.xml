@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Design and Analysis of Alforithms"
+            android:text="You don't have any reserved book"
             android:textSize="20dp"
             android:id="@+id/textView3"
             android:textColor="@color/text"/>
@@ -38,7 +38,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Database Management"
+            android:text=""
             android:textSize = "20dp"
             android:textColor="@color/text"
             android:id="@+id/textView4" />
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Object Oriented Analysis and Design"
+            android:text=""
             android:textSize="20dp"
             android:textColor="@color/text"
             android:id="@+id/textView5" />
@@ -54,7 +54,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="World War 2"
+            android:text=""
             android:textSize="20dp"
             android:textColor="@color/text"
             android:id="@+id/textView6" />

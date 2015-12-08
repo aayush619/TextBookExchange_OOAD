@@ -5,15 +5,19 @@ package com.example.ali.loginregister;
  */
 public class ReservationManager {
 
+    private static ReservationManager ourInstance = new ReservationManager();
 
-    private ReservationManager(){
-
+    public static ReservationManager getInstance() {
+        return ourInstance;
     }
-       public static void Reserve(String tl)
+
+    private ReservationManager() {
+    }
+
+       public static void Reserve(Book book)
        {
-                String title = tl;
            DatabaseManager dm = DatabaseManager.getInstance();
-           dm.deleteEntry(title);
+           dm.ReserveBook(book);
        }
 
 }
